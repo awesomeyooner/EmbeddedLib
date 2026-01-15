@@ -1,0 +1,26 @@
+{
+  "name": "EmbeddedLib",
+  "version": "1.0.0",
+  "description": "Misc Helper functions",
+  "keywords": "",
+  "repository":
+  {
+    "type": "git",
+    "url": "https://github.com/awesomeyooner/EmbeddedLib.git"
+  },
+  "authors":
+  [
+    {
+      "name": "Aaron Yoon",
+      "email": "aaronyoon324@gmail.com",
+      "url": "https://awesomeyooner.github.io/contact.html",
+      "maintainer": true
+    }
+  ],
+  "license": "MIT",
+  "dependencies": {
+    
+  },
+  "frameworks": "*",
+  "platforms": "*"
+}

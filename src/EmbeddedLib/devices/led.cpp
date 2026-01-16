@@ -71,7 +71,7 @@ void LED::toggle(bool turn_on)
 void LED::toggle()
 {
     // If it's on, turn off. If it's not on, turn on
-    is_on ? off() : on(); 
+    m_is_on ? off() : on(); 
 
 } // end of "toggle"
 

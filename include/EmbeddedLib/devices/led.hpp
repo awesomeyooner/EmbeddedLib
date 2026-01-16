@@ -8,6 +8,8 @@ class LED
 
     public:
 
+        LED();
+
         LED(int pin);
 
         /**
@@ -48,6 +50,13 @@ class LED
          * @param turn_on `bool` True to turn on, false to turn off
          */
         void toggle(bool turn_on);
+
+        /**
+         * @brief Toggles the LED. If it's on, it turns off. If it's off,
+         * it turns on
+         * 
+         */
+        void toggle();
 
     private:
         int m_pin;

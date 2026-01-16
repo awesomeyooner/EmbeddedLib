@@ -1,11 +1,21 @@
 #include "EmbeddedLib/devices/led.hpp"
 
+
+LED::LED()
+{
+    // -1 for "uninitialized"
+    m_pin = -1;
+    m_is_on = false;
+
+} // end of "LED"
+
+
 LED::LED(int pin)
 {
     m_pin = pin;
     m_is_on = false;
 
-} // end of LED
+} // end of "LED"
 
 
 void LED::initialize()
@@ -54,6 +64,14 @@ void LED::toggle(bool turn_on)
 {
     // If user wants to turn it on, turn on. Turn off otherwise
     turn_on ? on() : off();
+
+} // end of "toggle"
+
+
+void LED::toggle()
+{
+    // If it's on, turn off. If it's not on, turn on
+    is_on ? off() : on(); 
 
 } // end of "toggle"
 

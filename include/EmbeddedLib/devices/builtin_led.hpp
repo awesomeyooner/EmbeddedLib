@@ -1,7 +1,6 @@
 #ifndef BUILTIN_LED_HPP
 #define BUILTIN_LED_HPP
 
-#include <Arduino.h>
 #include "EmbeddedLib/devices/led.hpp"
 
 #ifdef ESP32_DEVKIT_V1

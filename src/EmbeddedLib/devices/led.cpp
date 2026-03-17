@@ -21,7 +21,7 @@ LED::LED(int pin)
 void LED::initialize()
 {
     // Set the pinmode to output
-    pinMode(m_pin, OUTPUT);
+    // pinMode(m_pin, OUTPUT);
 
     // Turn off as a safety check
     off();
@@ -47,7 +47,7 @@ bool LED::is_on()
 void LED::on()
 {
     m_is_on = true;
-    digitalWrite(m_pin, HIGH);
+    // digitalWrite(m_pin, HIGH);
 
 } // end of "on"
 
@@ -55,7 +55,7 @@ void LED::on()
 void LED::off()
 {
     m_is_on = false;
-    digitalWrite(m_pin, LOW);
+    // digitalWrite(m_pin, LOW);
 
 } // end of "off"
 

@@ -20,7 +20,7 @@ class Serial
 
         static bool transmit_bytes(const std::vector<uint8_t>& bytes);
 
-        static bool on_receive(uint8_t* buffer, uint32_t length);
+        static bool on_receive(const std::vector<uint8_t>& bytes);
 
         static bool print(std::string text);
 

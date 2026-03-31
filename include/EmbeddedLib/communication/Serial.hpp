@@ -30,6 +30,10 @@ class Serial
 
         static bool println(double data);
 
+        static bool print_header(std::string header, std::string text);
+
+        static bool print_header(std::string header, double data);
+
         static bool info(std::string text);
 
         static bool info(double data);

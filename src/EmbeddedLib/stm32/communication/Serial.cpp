@@ -1,6 +1,6 @@
 #ifdef STM32CUBE
 
-#include "EmbeddedLib/stm32/communication/Serial.hpp"
+#include "EmbeddedLib/communication/Serial.hpp"
 
 #include "usb_device.h"
 #include "usbd_cdc_if.h"
@@ -78,44 +78,60 @@ bool Serial::println(double data)
 } // end of println(double)
 
 
+bool Serial::print_header(std::string header, std::string text)
+{
+    return println(
+        string_util::timestamped_header(header, text)
+    );
+
+} // end of "print_header(std::string, std::string)"
+
+
+bool Serial::print_header(std::string header, double data)
+{
+    return print_header(header, std::to_string(data));
+
+} // end of "print_header(std::string, std::string)"
+
+
 bool Serial::info(std::string text)
 {
-    string_util::timestamped_header("INFO", text);
+    return print_header("INFO", text);
 
 } // end of "info(std::string)"
 
 
 bool Serial::info(double data)
 {
-    info(std::to_string(data));
+    return info(std::to_string(data));
 
 } // end of "info(double)"
 
 
 bool Serial::debug(std::string text)
 {
-    string_util::timestamped_header("DEBUG", text);
+    return print_header("DEBUG", text);
 
 } // end of "debug(std::string)"
 
 
 bool Serial::debug(double data)
 {
-    debug(std::to_string(data));
+    return debug(std::to_string(data));
 
 } // end of "debug(double)"
 
 
 bool Serial::error(std::string text)
 {
-    string_util::timestamped_header("ERROR", text);
+    return print_header("ERROR", text);
 
 } // end of "error(std::string)"
 
 
 bool Serial::error(double data)
 {
-    error(std::to_string(data));
+    return error(std::to_string(data));
 
 } // end of "error(double)"
 

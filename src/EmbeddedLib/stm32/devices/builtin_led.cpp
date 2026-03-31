@@ -17,7 +17,6 @@
     #define LED_PIN
 #endif
 
-
 LED BuiltinLED::led;
 
 void BuiltinLED::initialize(int pin)

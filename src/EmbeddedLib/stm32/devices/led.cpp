@@ -1,5 +1,7 @@
 #include "EmbeddedLib/devices/led.hpp"
 
+#ifdef STM32CUBE
+
 
 LED::LED()
 {
@@ -74,5 +76,8 @@ void LED::toggle()
     m_is_on ? off() : on(); 
 
 } // end of "toggle"
+
+
+#endif
 
 

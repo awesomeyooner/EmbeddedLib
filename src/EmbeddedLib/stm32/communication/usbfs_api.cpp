@@ -2,7 +2,6 @@
 #include "EmbeddedLib/communication/Serial.hpp"
 
 
-// In file: cube/USB_DEVICE/App/usbd_cdc_if.c
 bool USBFS_on_receive(uint8_t* buffer, uint32_t length)
 {
     // Convert dynamic array to vector

@@ -7,7 +7,6 @@ class System
 
     public:
 
-
         /**
          * @brief Initialize the system (optional, based on implementation)
          * 

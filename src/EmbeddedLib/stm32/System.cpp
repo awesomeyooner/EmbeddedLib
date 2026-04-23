@@ -1,3 +1,6 @@
+#ifdef STM32CUBE
+
+
 #include "EmbeddedLib/System.hpp"
 
 #include "adc.h"
@@ -22,3 +25,6 @@ double System::get_seconds()
     return (double)HAL_GetTick() / 1000.0;
 
 } // end of "get_seconds()"
+
+
+#endif // STM32CUBE

@@ -8,8 +8,6 @@
 #include "usb_device.h"
 #include "gpio.h"
 
-#include "usbd_cdc_if.h"
-
 
 void System::init()
 {

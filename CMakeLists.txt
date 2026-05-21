@@ -11,9 +11,9 @@ add_library(${PROJECT_NAME}
 
     src/util/math/math_util.cpp
 
-    src/stm32/System.cpp
+    src/System.cpp
 
-    src/stm32/devices/led.cpp
+    src/devices/led.cpp
 )
 
 target_include_directories(${PROJECT_NAME}

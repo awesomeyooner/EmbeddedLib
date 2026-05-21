@@ -32,7 +32,7 @@ string string_util::to_string(double value, int decimals)
     int integer_part = (int)value;
 
     // The fractional (decimal) part of the input as an integer
-    int frac_part = (int)(value - integer_part) * pow(10, decimals);
+    int frac_part = (int)((value - integer_part) * pow(10, decimals));
 
     // The format command (default to 3 decimals)
     char format_cmd[] = "%d.%03d";
@@ -41,10 +41,28 @@ string string_util::to_string(double value, int decimals)
     // + '0' makes it the ASCII char, not the actual byte of `decimals`
     format_cmd[5] = decimals + '0';
 
+    // Format with snprintf
     snprintf(buffer, sizeof(buffer), format_cmd, integer_part, frac_part);
 
+    // c-string to normal string
     string converted(buffer);
 
     return converted;
 
 } // end of "to_string(double, int)"
+
+
+string string_util::to_string(int value)
+{
+    // c-string for snprintf
+    char buffer[string_util::STRING_BUFFER_SIZE];
+    
+    // Format with snprintf
+    snprintf(buffer, sizeof(buffer), "%d", value);
+
+    // c-string to normal string
+    string converted(buffer);
+
+    return converted;
+
+} // end of "to_string(int)"

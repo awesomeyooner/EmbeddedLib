@@ -12,6 +12,16 @@ class LED
 
     public:
 
+        /**
+         * @brief Creates a new LED object with the given GPIO Family and Pin Number.
+         * 
+         * Example:
+         * 
+         * `PC1 -> LED(GPIOC, GPIO_PIN_1)`
+         * 
+         * @param gpio_family 
+         * @param pin 
+         */
         LED(GPIO_TypeDef* gpio_family, uint16_t pin);
 
         /**

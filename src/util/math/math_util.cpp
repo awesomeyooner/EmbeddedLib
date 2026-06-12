@@ -16,3 +16,16 @@ double math::clamp(double input, double lower_bound, double upper_bound)
         return input;
 
 } // end of "clamp"
+
+
+double math::radians_to_degrees(double radians)
+{
+    return radians * (180 / M_PI);
+
+} // end of "radians_to_degrees(double)"
+
+
+double math::degrees_to_radians(double degrees)
+{
+    return degrees * (M_PI / 180);
+}

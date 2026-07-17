@@ -12,6 +12,7 @@ add_library(${PROJECT_NAME}
     src/util/math/math_util.cpp
 
     src/system.cpp
+    src/watchdog.cpp
 
     src/devices/led.cpp
 )

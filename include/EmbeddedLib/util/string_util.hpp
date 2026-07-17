@@ -5,7 +5,7 @@
 #include <stdio.h>
 #include <cmath>
 
-#include "EmbeddedLib/System.hpp"
+#include "EmbeddedLib/system.hpp"
 
 
 namespace string_util

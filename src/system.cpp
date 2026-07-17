@@ -1,4 +1,4 @@
-#include "EmbeddedLib/System.hpp"
+#include "EmbeddedLib/system.hpp"
 
 #include "stm32f4xx_hal.h"
 

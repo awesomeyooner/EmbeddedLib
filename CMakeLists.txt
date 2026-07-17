@@ -11,7 +11,7 @@ add_library(${PROJECT_NAME}
 
     src/util/math/math_util.cpp
 
-    src/System.cpp
+    src/system.cpp
 
     src/devices/led.cpp
 )

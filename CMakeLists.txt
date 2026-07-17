@@ -15,6 +15,8 @@ add_library(${PROJECT_NAME}
     src/watchdog.cpp
 
     src/devices/led.cpp
+    src/devices/gpio_device.cpp
+    src/devices/timer_device.cpp
 )
 
 target_include_directories(${PROJECT_NAME}

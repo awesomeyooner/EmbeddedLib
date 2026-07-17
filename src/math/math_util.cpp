@@ -1,4 +1,4 @@
-#include "EmbeddedLib/util/math/math_util.hpp"
+#include "EmbeddedLib/math/math_util.hpp"
 
 
 double math::clamp(double input, double lower_bound, double upper_bound)

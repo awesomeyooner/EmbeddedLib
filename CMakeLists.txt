@@ -9,7 +9,7 @@ add_library(${PROJECT_NAME}
     src/util/string_util.cpp
     src/status.cpp
 
-    src/util/math/math_util.cpp
+    src/math/math_util.cpp
 
     src/system.cpp
     src/watchdog.cpp

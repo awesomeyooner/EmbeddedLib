@@ -1,42 +1,13 @@
 #include "EmbeddedLib/devices/led.hpp"
 
-#ifdef STM32CUBE
 
-
-LED::LED()
+LED::LED(GPIO_TypeDef* gpio_family, uint16_t pin)
 {
-    // -1 for "uninitialized"
-    m_pin = -1;
-    m_is_on = false;
-
-} // end of "LED"
-
-
-LED::LED(int pin)
-{
+    m_gpio_family = gpio_family;
     m_pin = pin;
     m_is_on = false;
 
 } // end of "LED"
-
-
-void LED::initialize()
-{
-    // Set the pinmode to output
-    // pinMode(m_pin, OUTPUT);
-
-    // Turn off as a safety check
-    off();
-
-} // end of "initialize"
-
-
-void LED::initialize(int pin)
-{
-    m_pin = pin;
-    initialize();
-
-} // end of "initialize"
 
 
 bool LED::is_on()
@@ -49,7 +20,7 @@ bool LED::is_on()
 void LED::on()
 {
     m_is_on = true;
-    // digitalWrite(m_pin, HIGH);
+    HAL_GPIO_WritePin(m_gpio_family, m_pin, GPIO_PIN_SET);
 
 } // end of "on"
 
@@ -57,7 +28,7 @@ void LED::on()
 void LED::off()
 {
     m_is_on = false;
-    // digitalWrite(m_pin, LOW);
+    HAL_GPIO_WritePin(m_gpio_family, m_pin, GPIO_PIN_RESET);
 
 } // end of "off"
 
@@ -76,8 +47,3 @@ void LED::toggle()
     m_is_on ? off() : on(); 
 
 } // end of "toggle"
-
-
-#endif
-
-

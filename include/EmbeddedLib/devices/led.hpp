@@ -2,27 +2,27 @@
 #define LED_HPP
 
 
+#include "gpio.h"
+
+#include <stm32f446xx.h>
+
+
 class LED
 {
 
     public:
 
-        LED();
-
-        LED(int pin);
-
         /**
-         * @brief Configures the pinmode to output
+         * @brief Creates a new LED object with the given GPIO Family and Pin Number.
          * 
-         */
-        void initialize();
-
-        /**
-         * @brief Configures the pinmode of the specific pin to output
+         * Example:
          * 
-         * @param _pin `int` The pin to use
+         * `PC1 -> LED(GPIOC, GPIO_PIN_1)`
+         * 
+         * @param gpio_family 
+         * @param pin 
          */
-        void initialize(int pin);
+        LED(GPIO_TypeDef* gpio_family, uint16_t pin);
 
         /**
          * @brief Gets if the LED is on or not
@@ -58,8 +58,14 @@ class LED
         void toggle();
 
     private:
-        int m_pin;
 
+        // The GPIO Family (The second letter in PA, PB, PC, PD)
+        GPIO_TypeDef* m_gpio_family = nullptr;
+
+        // The Pin Number (The number part of PA8, PC1)
+        uint16_t m_pin;
+
+        // Whether or not the LED is on
         bool m_is_on;
 
 }; // class LED

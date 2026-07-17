@@ -6,7 +6,7 @@ set(CMAKE_EXPORT_COMPILE_COMMANDS ON)
 
 # === Main Library ===
 add_library(${PROJECT_NAME}
-    src/util/string_util.cpp
+    src/util/string_formatter.cpp
     src/status.cpp
 
     src/math/math_util.cpp

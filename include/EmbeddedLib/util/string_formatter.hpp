@@ -1,5 +1,5 @@
-#ifndef STRING_UTIL_HPP
-#define STRING_UTIL_HPP
+#ifndef STRING_FORMATTER_HPP
+#define STRING_FORMATTER_HPP
 
 #include <string>
 #include <stdio.h>
@@ -8,7 +8,7 @@
 #include "EmbeddedLib/system.hpp"
 
 
-namespace string_util
+namespace string_formatter
 {
     // The max buffer size for converting a double to a string
     constexpr int STRING_BUFFER_SIZE = 32;
@@ -54,7 +54,7 @@ namespace string_util
      */
     std::string to_string(int value);
        
-} // namespace string_util
+} // namespace string_formatter
 
 
-#endif // STRING_UTIL_HPP
+#endif // STRING_FORMATTER_HPP

@@ -1,10 +1,10 @@
-#include "EmbeddedLib/util/string_util.hpp"
+#include "EmbeddedLib/util/string_formatter.hpp"
 
 
 using namespace std;
 
 
-string string_util::add_header(const string& header, const string& text)
+string string_formatter::add_header(const string& header, const string& text)
 {
     // [ HEADER ]: Hellow World!
     return "[ " + header + " ]: " + text;
@@ -12,7 +12,7 @@ string string_util::add_header(const string& header, const string& text)
 } // end of "add_header(const std::string&, const std::string&)"
 
 
-string string_util::timestamped_header(const string& header, const string& text)
+string string_formatter::timestamped_header(const string& header, const string& text)
 {
     double time = System::get_seconds();
     string formatted = "[ " + to_string(time) + " ] " + add_header(header, text);
@@ -23,10 +23,10 @@ string string_util::timestamped_header(const string& header, const string& text)
 } // end of "timestamped_header(const std::string&, const std::string&))"
 
 
-string string_util::to_string(double value, int decimals)
+string string_formatter::to_string(double value, int decimals)
 {
     // c-string for snprintf
-    char buffer[string_util::STRING_BUFFER_SIZE];
+    char buffer[string_formatter::STRING_BUFFER_SIZE];
     
     // The integer part of the input
     int integer_part = (int)value;
@@ -52,10 +52,10 @@ string string_util::to_string(double value, int decimals)
 } // end of "to_string(double, int)"
 
 
-string string_util::to_string(int value)
+string string_formatter::to_string(int value)
 {
     // c-string for snprintf
-    char buffer[string_util::STRING_BUFFER_SIZE];
+    char buffer[string_formatter::STRING_BUFFER_SIZE];
     
     // Format with snprintf
     snprintf(buffer, sizeof(buffer), "%d", value);

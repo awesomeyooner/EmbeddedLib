@@ -2,7 +2,7 @@
 #define WATCHDOG_HPP
 
 
-#include "EmbeddedLib/util/status.hpp"
+#include "EmbeddedLib/status.hpp"
 #include "EmbeddedLib/system.hpp"
 
 

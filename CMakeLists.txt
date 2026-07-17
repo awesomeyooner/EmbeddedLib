@@ -6,14 +6,19 @@ set(CMAKE_EXPORT_COMPILE_COMMANDS ON)
 
 # === Main Library ===
 add_library(${PROJECT_NAME}
-    src/util/string_formatter.cpp
-    src/status.cpp
 
-    src/math/math_util.cpp
-
+    # /
     src/system.cpp
     src/watchdog.cpp
+    src/status.cpp
 
+    # /util
+    src/util/string_formatter.cpp    
+
+    # /math
+    src/math/math_util.cpp
+
+    # /devices
     src/devices/led.cpp
     src/devices/gpio_device.cpp
     src/devices/timer_device.cpp

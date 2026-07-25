@@ -49,6 +49,13 @@ void TimerDevice::set_duty(double duty)
 } // end of "set_duty(double)"
 
 
+void TimerDevice::set_CCR(int ccr)
+{
+    __HAL_TIM_SET_COMPARE(m_timer, m_channel, ccr);
+
+} // end of "set_CCR(int)"
+
+
 void TimerDevice::set_PSC(int psc)
 {
     // htimx.Init.Prescaler

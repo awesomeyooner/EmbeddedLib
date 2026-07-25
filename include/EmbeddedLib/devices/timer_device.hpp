@@ -56,6 +56,13 @@ class TimerDevice
         void set_ARR(int arr);
 
         /**
+         * @brief Sets the Capture Compare Register of the timer
+         * 
+         * @param ccr 
+         */
+        void set_CCR(int ccr);
+
+        /**
          * @brief Get the prescalar of this timer.
          * This is the same as `htimx.Init.Prescalar`
          * 

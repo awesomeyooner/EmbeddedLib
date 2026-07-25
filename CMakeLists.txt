@@ -20,6 +20,7 @@ add_library(${PROJECT_NAME}
 
     # /devices
     src/devices/led.cpp
+    src/devices/ws2812b.cpp
     src/devices/gpio_device.cpp
     src/devices/timer_device.cpp
 )

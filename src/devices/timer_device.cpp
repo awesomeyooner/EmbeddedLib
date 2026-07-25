@@ -65,6 +65,27 @@ void TimerDevice::set_ARR(int arr)
 } // end of "set_ARR"
 
 
+int TimerDevice::get_PSC()
+{
+    return m_timer->Init.Prescaler;
+     
+} // end of "get_PSC()"
+
+
+int TimerDevice::get_ARR()
+{
+    return m_timer->Init.Period;
+
+} // end of "get_ARR()"
+
+
+int TimerDevice::get_CCR()
+{
+    return __HAL_TIM_GET_COMPARE(m_timer, m_channel);
+
+} // end of "get_CCR()"
+
+
 TIM_HandleTypeDef* TimerDevice::get_timer()
 {
     return m_timer;

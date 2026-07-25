@@ -56,6 +56,29 @@ class TimerDevice
         void set_ARR(int arr);
 
         /**
+         * @brief Get the prescalar of this timer.
+         * This is the same as `htimx.Init.Prescalar`
+         * 
+         * @return `int` 
+         */
+        int get_PSC();
+
+        /**
+         * @brief Get the Auto Reload Register (ARR) of this timer.
+         * This is the same as `htimx.Init.Period`
+         * 
+         * @return `int` 
+         */
+        int get_ARR();
+
+        /**
+         * @brief Get the pulse of this timer.
+         * 
+         * @return `int` 
+         */
+        int get_CCR();
+
+        /**
          * @brief Get the underlying timer handle
          * 
          * @return `TIM_HandleTypeDef*` 

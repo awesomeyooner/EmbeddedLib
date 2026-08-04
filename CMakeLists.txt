@@ -17,6 +17,7 @@ add_library(${PROJECT_NAME}
 
     # /math
     src/math/math_util.cpp
+    src/math/vector2d.cpp
 
     # /devices
     src/devices/led.cpp

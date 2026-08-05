@@ -32,7 +32,7 @@ string string_formatter::to_string(double value, int decimals)
     int integer_part = (int)value;
 
     // The fractional (decimal) part of the input as an integer
-    int frac_part = (int)((value - integer_part) * pow(10, decimals));
+    int frac_part = abs((int)((value - integer_part) * pow(10, decimals)));
 
     // The format command (default to 3 decimals)
     char format_cmd[] = "%d.%03d";

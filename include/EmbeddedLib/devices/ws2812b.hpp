@@ -109,46 +109,61 @@ class WS2812B
         status_utils::StatusCode update();
 
         /**
-         * @brief Set the color of the given LED. No need to call `update()`
+         * @brief Get the number of LEDs in the strip
          * 
-         * @param index `int` The index of the pixel to set, `[0, NUM_LEDS - 1]
-         * @param r `uint8_t` Red
-         * @param g `uint8_t` Green
-         * @param b `uint8_t` Blue
-         * @return `status_utils::StatusCode` OK if DMA transmit was successful, FAILED otherwise
+         * @return `int` 
          */
-        status_utils::StatusCode set_color(int index, uint8_t r, uint8_t g, uint8_t b);
+        int get_num_leds();
 
         /**
          * @brief Set the color of the given LED. No need to call `update()`
          * 
-         * @param index `int` The index of the pixel to set, `[0, NUM_LEDS - 1]
-         * @param color_data `ColorData` Color struct to set
-         * @return `status_utils::StatusCode` OK if DMA transmit was successful, FAILED otherwise
-         */
-        status_utils::StatusCode set_color(int index, ColorData color_data);
-
-        /**
-         * @brief Set the color of the given range of LEDs. No need to call `update()`
-         * 
-         * @param start `int` The start index of the pixel to set, `[0, NUM_LEDS - 1]
-         * @param end `int` The end of the pixel to set, `[start, NUM_LEDS - 1]
+         * @param index `int` The index of the pixel to set, `[0, NUM_LEDS - 1]`
          * @param r `uint8_t` Red
          * @param g `uint8_t` Green
          * @param b `uint8_t` Blue
+         * @param should_update `bool = true` Set to false to only internally set the color data. Update must be called
+         * manually if this is false
          * @return `status_utils::StatusCode` OK if DMA transmit was successful, FAILED otherwise
          */
-        status_utils::StatusCode set_color(int start, int end, uint8_t r, uint8_t g, uint8_t b);
+        status_utils::StatusCode set_color(int index, uint8_t r, uint8_t g, uint8_t b, bool should_update = true);
+
+        /**
+         * @brief Set the color of the given LED. No need to call `update()`
+         * 
+         * @param index `int` The index of the pixel to set, `[0, NUM_LEDS - 1]`
+         * @param color_data `ColorData` Color struct to set
+         * @param should_update `bool = true` Set to false to only internally set the color data. Update must be called
+         * manually if this is false
+         * @return `status_utils::StatusCode` OK if DMA transmit was successful, FAILED otherwise
+         */
+        status_utils::StatusCode set_color(int index, ColorData color_data, bool should_update = true);
 
         /**
          * @brief Set the color of the given range of LEDs. No need to call `update()`
          * 
-         * @param start `int` The start index of the pixel to set, `[0, NUM_LEDS - 1]
-         * @param end `int` The end of the pixel to set, `[start, NUM_LEDS - 1]
-         * @param color_data `ColorData` Color struct to set
+         * @param start `int` The start index of the pixel to set, `[0, NUM_LEDS - 1]`
+         * @param end `int` The end of the pixel to set, `[start, NUM_LEDS - 1]`
+         * @param r `uint8_t` Red
+         * @param g `uint8_t` Green
+         * @param b `uint8_t` Blue
+         * @param should_update `bool = true` Set to false to only internally set the color data. Update must be called
+         * manually if this is false
          * @return `status_utils::StatusCode` OK if DMA transmit was successful, FAILED otherwise
          */
-        status_utils::StatusCode set_color(int index, int end, ColorData color_data);
+        status_utils::StatusCode set_color(int start, int end, uint8_t r, uint8_t g, uint8_t b, bool should_update = true);
+
+        /**
+         * @brief Set the color of the given range of LEDs. No need to call `update()`
+         * 
+         * @param start `int` The start index of the pixel to set, `[0, NUM_LEDS - 1]`
+         * @param end `int` The end of the pixel to set, `[start, NUM_LEDS - 1]`
+         * @param color_data `ColorData` Color struct to set
+         * @param should_update `bool = true` Set to false to only internally set the color data. Update must be called
+         * manually if this is false
+         * @return `status_utils::StatusCode` OK if DMA transmit was successful, FAILED otherwise
+         */
+        status_utils::StatusCode set_color(int start, int end, ColorData color_data, bool should_update = true);
 
         /**
          * @brief Set the color of the entire LED strip. No need to call `update()`
@@ -156,17 +171,21 @@ class WS2812B
          * @param r `uint8_t` Red
          * @param g `uint8_t` Green
          * @param b `uint8_t` Blue
+         * @param should_update `bool = true` Set to false to only internally set the color data. Update must be called
+         * manually if this is false
          * @return `status_utils::StatusCode` OK if DMA transmit was successful, FAILED otherwise
          */
-        status_utils::StatusCode set_color(uint8_t r, uint8_t g, uint8_t b);
+        status_utils::StatusCode set_color(uint8_t r, uint8_t g, uint8_t b, bool should_update = true);
 
         /**
          * @brief Set the color of the entire LED strip. No need to call `update()`
          *  
          * @param color_data `ColorData` Color struct to set
+         * @param should_update `bool = true` Set to false to only internally set the color data. Update must be called
+         * manually if this is false
          * @return `status_utils::StatusCode` OK if DMA transmit was successful, FAILED otherwise
          */
-        status_utils::StatusCode set_color(ColorData color_data);
+        status_utils::StatusCode set_color(ColorData color_data, bool should_update = true);
 
         /**
          * @brief Stops the DMA and raises the ready flag to true upon DMA finish

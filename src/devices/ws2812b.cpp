@@ -45,78 +45,6 @@ StatusCode WS2812B::init()
 } // end of "init()"
 
 
-StatusCode WS2812B::set_color(int index, uint8_t r, uint8_t g, uint8_t b)
-{
-    // Out-of-Bounds check
-    if(index > m_pixel_data.size() - 1 || index < 0)
-        return StatusCode::FAILED;
-
-    m_pixel_data.at(index).color.r = r;
-    m_pixel_data.at(index).color.g = g;
-    m_pixel_data.at(index).color.b = b;
-
-    return update();
-
-} // end of "set_color(int, uint8_t, uint8_t, uint8_t)"
-
-
-StatusCode WS2812B::set_color(int index, ColorData color_data)
-{
-    // Out-of-Bounds check
-    if(index > m_pixel_data.size() - 1 || index < 0)
-        return StatusCode::FAILED;
-
-    m_pixel_data.at(index).color.r = color_data.color.r;
-    m_pixel_data.at(index).color.g = color_data.color.g;
-    m_pixel_data.at(index).color.b = color_data.color.b;
-
-    return update();
-
-} // end of "set_color(int, ColorData)"
-
-
-StatusCode WS2812B::set_color(int start, int end, uint8_t r, uint8_t g, uint8_t b)
-{
-    for(int i = start; i < end; i++)
-    {
-        set_color(i, r, g, b);
-    }
-
-    return update();
-
-} // end of "set_color(int, int, uint8_t, uint8_t, uint8_t)"
-
-
-StatusCode WS2812B::set_color(int start, int end, ColorData color_data)
-{
-    for(int i = start; i < end; i++)
-    {
-        set_color(i, color_data);
-    }
-
-    return update();
-
-} // end of "set_color(int, int, uint8_t, uint8_t, uint8_t)"
-
-
-StatusCode WS2812B::set_color(uint8_t r, uint8_t g, uint8_t b)
-{
-    set_color(0, m_num_leds - 1, r, g, b);
-
-    return update();
-
-} // end of "set_color(uint8_t, uint8_t, uint8_t)"
-
-
-StatusCode WS2812B::set_color(ColorData color_data)
-{
-    set_color(0, m_num_leds - 1, color_data);
-
-    return update();
-
-} // end of "set_color(int, int, uint8_t, uint8_t, uint8_t)"
-
-
 StatusCode WS2812B::update()
 {
     // If DMA isn't ready then fail
@@ -156,6 +84,85 @@ StatusCode WS2812B::update()
     return StatusCode::FAILED;
 
 } // end of "update()"
+
+
+int WS2812B::get_num_leds()
+{
+    return m_num_leds;
+
+} // end of "get_num_leds()"
+
+
+StatusCode WS2812B::set_color(int index, uint8_t r, uint8_t g, uint8_t b, bool should_update)
+{
+    // Out-of-Bounds check
+    if(index > m_pixel_data.size() - 1 || index < 0)
+        return StatusCode::FAILED;
+
+    m_pixel_data.at(index).color.r = r;
+    m_pixel_data.at(index).color.g = g;
+    m_pixel_data.at(index).color.b = b;
+
+    return should_update ? update() : StatusCode::OK;
+
+} // end of "set_color(int, uint8_t, uint8_t, uint8_t, bool = true)"
+
+
+StatusCode WS2812B::set_color(int index, ColorData color_data, bool should_update)
+{
+    // Out-of-Bounds check
+    if(index > m_pixel_data.size() - 1 || index < 0)
+        return StatusCode::FAILED;
+
+    m_pixel_data.at(index).color.r = color_data.color.r;
+    m_pixel_data.at(index).color.g = color_data.color.g;
+    m_pixel_data.at(index).color.b = color_data.color.b;
+
+    return should_update ? update() : StatusCode::OK;
+
+} // end of "set_color(int, ColorData, bool = true)"
+
+
+StatusCode WS2812B::set_color(int start, int end, uint8_t r, uint8_t g, uint8_t b, bool should_update)
+{
+    for(int i = start; i < end; i++)
+    {
+        set_color(i, r, g, b);
+    }
+
+    return should_update ? update() : StatusCode::OK;
+
+} // end of "set_color(int, int, uint8_t, uint8_t, uint8_t, bool = true)"
+
+
+StatusCode WS2812B::set_color(int start, int end, ColorData color_data, bool should_update)
+{
+    for(int i = start; i < end; i++)
+    {
+        set_color(i, color_data);
+    }
+
+    return should_update ? update() : StatusCode::OK;
+
+} // end of "set_color(int, int, uint8_t, uint8_t, uint8_t, bool = true)"
+
+
+StatusCode WS2812B::set_color(uint8_t r, uint8_t g, uint8_t b, bool should_update)
+{
+    set_color(0, m_num_leds - 1, r, g, b);
+
+    return should_update ? update() : StatusCode::OK;
+
+} // end of "set_color(uint8_t, uint8_t, uint8_t, bool = true)"
+
+
+StatusCode WS2812B::set_color(ColorData color_data, bool should_update)
+{
+    set_color(0, m_num_leds - 1, color_data);
+
+    return should_update ? update() : StatusCode::OK;
+
+} // end of "set_color(int, int, uint8_t, uint8_t, uint8_t, bool = true)"
 
 
 void WS2812B::dma_callback()

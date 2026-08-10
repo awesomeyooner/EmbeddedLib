@@ -24,6 +24,14 @@ bool GPIODevice::is_high()
 } // end of "is_high()"
 
 
+bool GPIODevice::is_low()
+{
+    // SET is HIGH, RESET is LOW
+    return get_state() == GPIO_PIN_RESET;
+
+} // end of "is_low()"
+
+
 void GPIODevice::set_high()
 {
     set(GPIO_PIN_SET);

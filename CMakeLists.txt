@@ -24,6 +24,7 @@ add_library(${PROJECT_NAME}
     src/devices/ws2812b.cpp
     src/devices/gpio_device.cpp
     src/devices/timer_device.cpp
+    src/devices/adc_device.cpp
 )
 
 target_include_directories(${PROJECT_NAME}

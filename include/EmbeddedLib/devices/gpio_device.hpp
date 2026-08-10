@@ -21,8 +21,8 @@ class GPIODevice
          * 
          * `PA13` <-> `GPIODevice(GPIOA, GPIO_PIN_13)`
          * 
-         * @param gpio_family 
-         * @param pin 
+         * @param gpio_family `GPIO_TypeDef*`
+         * @param pin `uint16_t`
          */
         GPIODevice(GPIO_TypeDef* gpio_family, uint16_t pin);
 
@@ -44,6 +44,14 @@ class GPIODevice
          * @return `false` If the pin state is `GPIO_PIN_RESET`
          */
         bool is_high();
+
+        /**
+         * @brief Gets if the pin is set to low or not
+         * 
+         * @return `true` If the pin state is `GPIO_PIN_RESET`
+         * @return `false` If the pin state is `GPIO_PIN_SET`
+         */
+        bool is_low();
 
         /**
          * @brief Set the pin `HIGH`

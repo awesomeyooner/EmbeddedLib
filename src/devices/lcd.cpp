@@ -37,6 +37,10 @@ StatusCode LCD::init()
     HAL_Delay(1);
     send_command(0x0C);
 
+    // Clear the display
+    HAL_Delay(5);
+    clear();
+
     return StatusCode::OK;
 
 } // end of "init()"

@@ -125,6 +125,33 @@ StatusCode LCD::send_string(int value)
 } // end of "send_string(int)"
 
 
+StatusCode LCD::clear(int delay_ms)
+{
+    // This is the correct command
+    StatusCode status = send_command(1);
+
+    HAL_Delay(delay_ms);
+
+    return status;
+
+    // This code will send a space to every char
+    // for(int row = 0; row < 2; row++)
+    // {
+    //     if(set_cursor(0, row) != StatusCode::OK)
+    //         return StatusCode::FAILED;
+
+    //     for(int col = 0; col < 16; col++)
+    //     {
+    //         if(send_data(' ') != StatusCode::OK)
+    //             return StatusCode::FAILED;
+    //     }
+    // }
+
+    // return StatusCode::OK;
+    
+} // end of "clear(int = 5)"
+
+
 StatusCode LCD::transmit(const vector<uint8_t>& bytes)
 {
     auto status = HAL_I2C_Master_Transmit(m_i2c, m_address, (uint8_t*)bytes.data(), bytes.size(), m_timeout_ms);

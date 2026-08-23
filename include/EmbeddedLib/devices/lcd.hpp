@@ -85,6 +85,15 @@ class LCD
          */
         status_utils::StatusCode send_string(int value);
 
+        /**
+         * @brief Clears the entire screen
+         * 
+         * @param delay_ms `int = 5` The delay to pause execution in milliseconds to ensure the LCD is ready for
+         * subsequent commands. Defaults to 5 ms
+         * @return `status_utils::StatusCode` OK if transmit was successful 
+         */
+        status_utils::StatusCode clear(int delay_ms = 5);
+
     private:
 
         // The i2c transaction timeout in milliseconds

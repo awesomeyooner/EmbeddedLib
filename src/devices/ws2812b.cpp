@@ -125,9 +125,9 @@ StatusCode WS2812B::set_color(int index, ColorData color_data, bool should_updat
 
 StatusCode WS2812B::set_color(int start, int end, uint8_t r, uint8_t g, uint8_t b, bool should_update)
 {
-    for(int i = start; i < end; i++)
+    for(int i = start; i <= end; i++)
     {
-        set_color(i, r, g, b);
+        set_color(i, r, g, b, false);
     }
 
     return should_update ? update() : StatusCode::OK;
@@ -137,9 +137,9 @@ StatusCode WS2812B::set_color(int start, int end, uint8_t r, uint8_t g, uint8_t 
 
 StatusCode WS2812B::set_color(int start, int end, ColorData color_data, bool should_update)
 {
-    for(int i = start; i < end; i++)
+    for(int i = start; i <= end; i++)
     {
-        set_color(i, color_data);
+        set_color(i, color_data, false);
     }
 
     return should_update ? update() : StatusCode::OK;
@@ -149,18 +149,14 @@ StatusCode WS2812B::set_color(int start, int end, ColorData color_data, bool sho
 
 StatusCode WS2812B::set_color(uint8_t r, uint8_t g, uint8_t b, bool should_update)
 {
-    set_color(0, m_num_leds - 1, r, g, b);
-
-    return should_update ? update() : StatusCode::OK;
+    return set_color(0, m_num_leds - 1, r, g, b, should_update);
 
 } // end of "set_color(uint8_t, uint8_t, uint8_t, bool = true)"
 
 
 StatusCode WS2812B::set_color(ColorData color_data, bool should_update)
 {
-    set_color(0, m_num_leds - 1, color_data);
-
-    return should_update ? update() : StatusCode::OK;
+    return set_color(0, m_num_leds - 1, color_data, should_update);
 
 } // end of "set_color(int, int, uint8_t, uint8_t, uint8_t, bool = true)"
 

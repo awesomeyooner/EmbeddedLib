@@ -1,3 +1,7 @@
+#ifndef VECTOR2D_HPP
+#define VECTOR2D_HPP
+
+
 #include "EmbeddedLib/math/n_vector.hpp"
 
 #include <cmath>
@@ -54,3 +58,6 @@ class Vector2d : public Vector<2>
 
 
 }; // class Vector2d
+
+
+#endif // VECTOR2D_HPP

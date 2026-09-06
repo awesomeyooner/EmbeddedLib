@@ -49,3 +49,14 @@ target_link_libraries(${CMAKE_PROJECT_NAME}
 )
 
 ```
+
+### Disabling certain build components
+
+By default, including `EmbeddedLib` will compile all `.cpp` files, but some of them require things like `tim.h`, `adc.h`, etc, which are not always present in your specific project. Here is a list of available options
+
+| Dependent(s) | Description | Required Line |
+| --- | --- | --- |
+| `gpio.h` | GPIO Pins | `set(EMBEDDEDLIB_BUILD_GPIO OFF)`
+| `tim.h` | TIM Channels | `set(EMBEDDEDLIB_BUILD_TIMER OFF)`
+| `adc.h` | ADC Channels | `set(EMBEDDEDLIB_BUILD_ADC OFF)`
+| `i2c.h` | I2C Lines | `set(EMBEDDEDLIB_BUILD_I2C OFF)`

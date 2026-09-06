@@ -54,9 +54,11 @@ target_link_libraries(${CMAKE_PROJECT_NAME}
 
 By default, including `EmbeddedLib` will compile all `.cpp` files, but some of them require things like `tim.h`, `adc.h`, etc, which are not always present in your specific project. Here is a list of available options
 
+> **NOTE** For whatever reason, cmake complains when you simply use `set(EMBEDDEDLIB_BUILD_XXX OFF)`, so I've updated it to forcefully change it
+
 | Dependent(s) | Description | Required Line |
 | --- | --- | --- |
-| `gpio.h` | GPIO Pins | `set(EMBEDDEDLIB_BUILD_GPIO OFF)`
-| `tim.h` | TIM Channels | `set(EMBEDDEDLIB_BUILD_TIMER OFF)`
-| `adc.h` | ADC Channels | `set(EMBEDDEDLIB_BUILD_ADC OFF)`
-| `i2c.h` | I2C Lines | `set(EMBEDDEDLIB_BUILD_I2C OFF)`
+| `gpio.h` | GPIO Pins | `set(EMBEDDEDLIB_BUILD_GPIO OFF CACHE BOOL "Disable GPIO compiling" FORCE)`
+| `tim.h` | TIM Channels | `set(EMBEDDEDLIB_BUILD_TIMER OFF CACHE BOOL "Disable TIM compiling" FORCE)`
+| `adc.h` | ADC Channels | `set(EMBEDDEDLIB_BUILD_ADC OFF CACHE BOOL "Disable ADC compiling" FORCE)`
+| `i2c.h` | I2C Lines | `set(EMBEDDEDLIB_BUILD_I2C OFF CACHE BOOL "Disable I2C compiling" FORCE)`

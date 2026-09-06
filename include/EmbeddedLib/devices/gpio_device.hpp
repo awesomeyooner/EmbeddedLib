@@ -2,10 +2,13 @@
 #define GPIO_DEVICE_HPP
 
 
+#include <functional>
+
 #include "EmbeddedLib/status.hpp"
 
 #include "gpio.h"
 
+#include "stm32f4xx_hal_gpio.h"
 #include <stm32f446xx.h>
 
 
@@ -25,6 +28,36 @@ class GPIODevice
          * @param pin `uint16_t`
          */
         GPIODevice(GPIO_TypeDef* gpio_family, uint16_t pin);
+
+        /**
+         * @brief Attach the callback function to run when the corresponding pin is called in
+         * `on_EXTI_callback`. 
+         * 
+         * To use EXTI, first enable your pin as `GPIO_EXTIx` in `CubeMX`, then under `System Core` on the left click `GPIO`, 
+         * then `NVIC`, then enable the EXTI interrupt
+         * 
+         * @param callback `std::function<void()>`
+         */
+        void attach_callback(std::function<void()> callback);
+
+        /**
+         * @brief Call this inside `HAL_GPIO_EXTI_Callback`. This will automatically checn if `pin` is equal to the internal pin
+         * assigned and call the callback accordingly. If the pin is not the right one, nothing will happen
+         * 
+         * To use this, simple add
+         * 
+         * ```
+         * void HAL_GPIO_EXTI_Callback(uint16_t GPIO_Pin)
+         * {
+         *     my_gpio.on_EXTI_callback(GPIO_Pin);
+         *
+         * } // end of "HAL_GPIO_EXTI_Callback(uint16_t)"
+         * ```
+         * 
+         * @param pin `uint16_t` The GPIO pin that triggered the interrupt
+         * @return `bool` `true` if the pin was the right pin. `false` otherwise
+         */
+        bool on_EXTI_callback(uint16_t pin);
 
         /**
          * @brief Gets the PinState of this pin
@@ -87,6 +120,9 @@ class GPIODevice
 
         // The GPIO pin number, i.e. PA13 is `GPIO_PIN_13`
         uint16_t m_pin = 0;
+
+        // The (optional) callback function when using GPIO_EXTI
+        std::function<void()> m_callback = nullptr;
 
         /**
          * @brief HAL wrapper to set the pin

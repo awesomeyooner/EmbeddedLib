@@ -1,19 +1,17 @@
 #include "EmbeddedLib/math/control/pid_controller.hpp"
 
 
-PIDController::PIDController(double kP, double kI, double kD, double kF, FeedForwardType ff_type)
+PIDController::PIDController(double kP, double kI, double kD, double kV, double kF, FeedForwardType ff_type)
 {
     m_kP = kP;
     m_kI = kI;
     m_kD = kD;
+    m_kV = kV;
     m_kF = kF;
     m_ff_type = ff_type;
 
 
 } // end of "PIDController"
-
-
-PIDController::PIDController(double kP, double kI, double kD) : PIDController(kP, kI, kD, 0, FeedForwardType::STATIC){}
 
 
 double PIDController::get_error()
@@ -73,17 +71,18 @@ double PIDController::calculate(double timestamp, double position, double veloci
     m_velocity = velocity;
 
     // Update the error area
-    update_accumulated_error(timestamp, position);
+    // update_accumulated_error(timestamp, position);
 
     // Get the errors and feedforward
     double error = get_error();
-    double error_rate = get_error_rate();
-    double accumulated_error = get_accumulated_error();
+    // double error_rate = get_error_rate();
+    // double accumulated_error = get_accumulated_error();
     double static_ff = get_static_feedforward();
     double velocity_ff = get_velocity_feedforward(setpoint);
 
     // PID(F) Equation
-    double output = (m_kP * error) + (m_kI * accumulated_error) + (m_kD * error_rate) + static_ff + velocity_ff;
+    // double output = (m_kP * error) + (m_kI * accumulated_error) + (m_kD * error_rate) + static_ff + velocity_ff;
+    double output = (m_kP * error) + static_ff + velocity_ff;
 
     return output;
 

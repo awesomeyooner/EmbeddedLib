@@ -66,8 +66,7 @@ class PIDController{
         // The timestamp since the last time `calculate` was called
         double m_prev_timestamp = 0;
 
-        PIDController(double kP = 0, double kI = 0, double kD = 0);
-        PIDController(double kP = 0, double kI = 0, double kD = 0, double kF = 0, FeedForwardType ff_type = FeedForwardType::STATIC_SIGNED);
+        PIDController(double kP = 0, double kI = 0, double kD = 0, double kV = 0, double kF = 0, FeedForwardType ff_type = FeedForwardType::STATIC_SIGNED);
 
         double get_error();
         double get_accumulated_error();

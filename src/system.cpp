@@ -17,6 +17,8 @@ void System::init()
 
 void System::enable_DWT()
 {
+    m_is_DWT_enabled = true;
+
     // Enable the trace and debug block
     CoreDebug->DEMCR |= CoreDebug_DEMCR_TRCENA_Msk;
 
@@ -38,7 +40,7 @@ double System::get_seconds()
 
 double System::get_seconds(bool use_DWT)
 {
-    if(use_DWT)
+    if(m_is_DWT_enabled && use_DWT)
     {
         uint32_t counts = get_DWT_count();
 

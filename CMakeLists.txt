@@ -18,6 +18,9 @@ set( SRC_FILES
     src/math/math_util.cpp
     src/math/vector2d.cpp
 
+    # /math/control
+    src/math/control/pid_controller.cpp
+
 )
 
 # `gpio.h` Dependents
@@ -67,7 +70,7 @@ set( SRC_FILES
         ON
     )
 
-    if(EMBEDDEDLIB_BUILD_ADC)
+    if(EMBEDDEDLIB_BUILD_I2C)
         list(APPEND SRC_FILES
             # /devices
             src/devices/lcd.cpp

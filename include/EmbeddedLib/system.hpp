@@ -145,6 +145,9 @@ class System
         // The number of times the DWT count has overflowed
         static inline uint32_t m_num_DWT_overflows = 0;
 
+        // Bookkeeping for if the DWT counter is enabled
+        static inline bool m_is_DWT_enabled = false;
+
 
 }; // class System
 

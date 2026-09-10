@@ -73,6 +73,21 @@ double StampedValue<T>::get_rate()
 
 
 template<typename T>
+double StampedValue<T>::get_rate(T value, double timestamp)
+{
+    double dv = value - m_value;
+    double dt = timestamp - m_timestamp;
+
+    // Avoid division by 0
+    if(dt == 0)
+        return 0;
+    
+    return dv / dt;
+
+} // end of "get_rate(T, double)"
+
+
+template<typename T>
 T StampedValue<T>::get_dv()
 {
     return m_value - m_prev_value;

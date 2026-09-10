@@ -1,6 +1,9 @@
 #include "EmbeddedLib/math/control/pid_controller.hpp"
 
 
+using namespace math;
+
+
 PIDController::PIDController(double kP, double kI, double kD, double kV, double kF, FeedForwardType ff_type)
 {
     m_kP = kP;
@@ -18,7 +21,7 @@ double PIDController::get_error()
 {
     // Using the sign convention of 
     // if a positive output gives an increase in position
-    return m_setpoint - m_position;
+    return m_setpoint - m_state.get_value();
 
 } // end of "get_error"
 
@@ -32,144 +35,103 @@ double PIDController::get_accumulated_error()
 
 double PIDController::get_error_rate()
 {
-    return -m_velocity;
+    return -m_state_rate;
 
 } // end of "get_error_rate"
 
 
-double PIDController::calculate(double timestamp, double position)
+double PIDController::calculate(double timestamp, double state)
 {
     // Call the overload function with m_setpoint passed in as the setpoint
-    return calculate(timestamp, position, m_setpoint);
+    return calculate(timestamp, state, m_setpoint);
 
 } // end of "calculate"
 
 
-double PIDController::calculate(double timestamp, double position, double setpoint)
+double PIDController::calculate(double timestamp, double state, double setpoint)
 {
-    double dx = position - m_position;
-    double dt = timestamp - m_prev_timestamp;
+    double state_rate = m_state.get_rate(state, timestamp);
 
-    // If dt is non zero, then = dx/dt, if it is then velocity = 0
-    double velocity = dt != 0 ? dx / dt : 0; 
-
-    return calculate(timestamp, position, velocity, setpoint);
+    return calculate(
+        timestamp, 
+        state, 
+        state_rate, 
+        setpoint
+    );
 
 } // end of "calculate"
 
 
-double PIDController::calculate(double timestamp, double position, double velocity, double setpoint)
+double PIDController::calculate(double timestamp, double state, double state_rate, double setpoint)
 {
-    // Keep track of last time this was called
-    m_prev_timestamp = timestamp;
-
     // Update the setpoint
     m_setpoint = setpoint;
 
     // Update the states
-    m_position = position;
-    m_velocity = velocity;
+    m_state.update(state, timestamp);
+    m_state_rate = state_rate;
 
     // Update the error area
-    // update_accumulated_error(timestamp, position);
+    update_accumulated_error(timestamp);
 
     // Get the errors and feedforward
     double error = get_error();
-    // double error_rate = get_error_rate();
-    // double accumulated_error = get_accumulated_error();
+    double error_rate = get_error_rate();
+    double accumulated_error = get_accumulated_error();
     double static_ff = get_static_feedforward();
     double velocity_ff = get_velocity_feedforward(setpoint);
 
+    double P = m_kP * error;
+    double I = m_kI * accumulated_error;
+    double D = m_kD * error_rate;
+
+    double F = static_ff;
+    double V = velocity_ff;
+
     // PID(F) Equation
-    // double output = (m_kP * error) + (m_kI * accumulated_error) + (m_kD * error_rate) + static_ff + velocity_ff;
-    double output = (m_kP * error) + static_ff + velocity_ff;
+    double output = P + I + D + F + V;
+
+    // Keep track of last time this was called
+    m_prev_error.update(error, timestamp);
 
     return output;
 
-} // end of "calculate"
+} // end of "calculate(double, double, double, double)"
 
 
-// Use the sliding window technique to calculate the area
-double PIDController::update_accumulated_error(double timestamp, double position)
+void PIDController::update_accumulated_error(double timestamp)
 {
-    // Update the position
-    m_position = position;
+    double dt = timestamp - m_prev_error.get_timestamp();
+    
+    double error1 = get_error();
+    double error2 = m_prev_error.get_value(); 
 
-    // Calculate the error
-    double error = get_error();
+    // Formula for area of trapezoid
+    double area = (error1 + error2) * dt / 2;
 
-    // Refresh the error buffer
-    m_error_buffer.push_front(StampedValue(error, timestamp));
-
-    // If the error buffer has less than 2 elements, then there's no area yet
-    if(m_error_buffer.size() < 2)
-        return 0;
-
-    // 0 is the newest, so 1 would be the second newest aka previous
-    StampedValue<double> previous_error = m_error_buffer.at(1);
-
-    // Calculate the difference in time between now and the previous error
-    double delta_time = timestamp - previous_error.get_timestamp(); 
-
-    // Calculate the area using trapezoidal rule
-    double area = ( previous_error.get_value() + error ) * ( delta_time / 2 );
-
-    // Add this loop's area to the accumulated error
     m_accumulated_error += area;
 
-    // Remove all stale / old data
-    for(size_t i = 0; i < m_error_buffer.size(); i++)
-    { 
-        // If the last most error is older than the allowed bounds, subtract it from
-        // the accumulated error and remove it from the buffer
-        if (m_error_buffer.back().get_timestamp() < timestamp - m_integral_time_bound)
-        {
-            // Subtract the oldest error area from the accumulated error
-            StampedValue<double> last_most = m_error_buffer.back();
-            StampedValue<double> second_last_most = m_error_buffer.at(m_error_buffer.size() - 2); // -1 is the back, so -2 is the one before the back
+    // Clamp the accumulated error for anti-windup
+    m_accumulated_error = clamp(m_accumulated_error, -m_integral_max_output, m_integral_max_output);
 
-            double dt = second_last_most.get_timestamp() - last_most.get_timestamp();
-            double remove_area = ( last_most.get_value() + second_last_most.get_value() ) * ( dt / 2);
-
-            m_accumulated_error -= remove_area;
-
-            // Remove it from the buffer
-            m_error_buffer.pop_back();
-        }
-        // Once the back is within the bounds, stop the loop
-        else
-            break;
-    }
-    
-    return m_accumulated_error;
-
-} // end of "update_accumulated_error"
+} // end of "update_accumulated_error()"
 
 
-double PIDController::update_error_rate(double timestamp, double position)
+double PIDController::update_error_rate(double timestamp)
 {
-    m_position = position;
-
-    // If the error buffer has less than 2 elements, then there's no slope yet
-    if(m_error_buffer.size() < 2)
-        return 0;
-
-    // 0 is the newest, so 1 would be the second newest aka previous
-    StampedValue<double> previous_error = m_error_buffer.at(1);
-
     double error = get_error();
 
     // Calculate the slope and return it;
-    double d_error = error - previous_error.get_value();
-    double d_t = timestamp - previous_error.get_timestamp();
+    double de = error - m_prev_error.get_value();
+    double dt = timestamp - m_prev_error.get_timestamp();
 
-    double slope = d_error / d_t;
+    double slope = de / dt;
 
-    m_velocity = -slope;
+    m_state_rate = -slope;
 
     return slope;
 
-} // end of "update_error_rate"
+} // end of "update_error_rate(double)"
 
 
 double PIDController::get_static_feedforward()
@@ -187,11 +149,11 @@ double PIDController::get_static_feedforward()
 
         // Effort is the gain times the cos of position
         case FeedForwardType::COS:
-            return m_kF * std::cos(m_position);
+            return m_kF * std::cos(m_state.get_value());
 
         // Effort is the gain times the sin of position
         case FeedForwardType::SIN:
-            return m_kF * std::cos(m_position);
+            return m_kF * std::cos(m_state.get_value());
 
         // Default to no effort
         default:

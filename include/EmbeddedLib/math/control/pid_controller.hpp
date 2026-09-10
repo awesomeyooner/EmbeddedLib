@@ -8,6 +8,7 @@
 
 #include "EmbeddedLib/system.hpp"
 #include "EmbeddedLib/util/stamped_value.hpp"
+#include "EmbeddedLib/math/math_util.hpp"
 
 
 // Options for what Feed Forward method to use
@@ -51,20 +52,22 @@ class PIDController{
         // The type of feedforward to use
         FeedForwardType m_ff_type = FeedForwardType::STATIC_SIGNED;
 
-        // How much time between the current and last integrated value to use
-        double m_integral_time_bound = 5; // seconds
+        /* 
+            The maximum output the integral part of PID can contribute to. This takes
+            kI into account, so that max output will be in units of the desired output. For example,
+            if the output is used to control voltage applied to a motor, then this variable will
+            determine the max voltage the integral part contributes to the total output.
+        */
+        double m_integral_max_output = -1;
 
         // The setpoint to go towards
         double m_setpoint = 0;
 
-        // The current position
-        double m_position = 0;
+        // The current state of the PID controller. If PID is used to control position, this would be "position"
+        StampedValue<double> m_state = 0;
 
-        // The current velocity
-        double m_velocity = 0;
-
-        // The timestamp since the last time `calculate` was called
-        double m_prev_timestamp = 0;
+        // The current rate of the state. If PID is used to control position, this would be "velocity"
+        double m_state_rate = 0;
 
         PIDController(double kP = 0, double kI = 0, double kD = 0, double kV = 0, double kF = 0, FeedForwardType ff_type = FeedForwardType::STATIC_SIGNED);
 
@@ -72,22 +75,20 @@ class PIDController{
         double get_accumulated_error();
         double get_error_rate();
 
-        double calculate(double timestamp, double position);
-        double calculate(double timestamp, double position, double setpoint);
-        double calculate(double timestamp, double position, double velocity, double setpoint);
+        double calculate(double timestamp, double state);
+        double calculate(double timestamp, double state, double setpoint);
+        double calculate(double timestamp, double state, double state_rate, double setpoint);
 
     private:
 
-        // Buffer for storing previous loops' errors
-        // The front has the MOST RECENT error
-        // The back has the OLDEST error
-        std::deque<StampedValue<double>> m_error_buffer;
+        // The timestamp since the last time `calculate` was called
+        StampedValue<double> m_prev_error = 0;
         
-        // The accumulated error (integral of error within the bounds)
-        double m_accumulated_error;
+        // The accumulated error (integral of error, starting at t = 0)
+        double m_accumulated_error = 0;
 
-        double update_accumulated_error(double timestamp, double position);
-        double update_error_rate(double timestamp, double position);
+        void update_accumulated_error(double timestamp);
+        double update_error_rate(double timestamp);
         double get_static_feedforward();
         double get_velocity_feedforward(double setpoint);
 

@@ -42,6 +42,16 @@ class StampedValue{
         double get_rate();
 
         /**
+         * @brief Get the the rate of change using the current value and timestamp and comparing it
+         * to a future value and timestamp without updating the internal values
+         * 
+         * @param value `T`
+         * @param timestamp `double`
+         * @return `double` 
+         */
+        double get_rate(T value, double timestamp);
+
+        /**
          * @brief Get the difference in values from current to previous
          * 
          * @return T

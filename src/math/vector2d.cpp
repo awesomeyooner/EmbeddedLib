@@ -16,6 +16,14 @@ Vector2d::Vector2d(double x, double y)
     :Vector2d({x, y}){}
 
 
+Vector2d::Vector2d(const Vector<2>& vector)
+{
+    set(vector.get(0), 0);
+    set(vector.get(1), 1);
+
+} // end of "Vector2d(const Vector<2>&)"
+
+
 Vector2d Vector2d::rotate(double radians)
 {
     double x = get(0);

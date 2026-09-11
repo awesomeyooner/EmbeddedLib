@@ -38,6 +38,13 @@ class Vector2d : public Vector<2>
         Vector2d(double x, double y);
 
         /**
+         * @brief Convert the dynamic Vector of dim = 2 to the fixed 2D Vector
+         * 
+         * @param vector 
+         */
+        Vector2d(const Vector<2>& vector);
+
+        /**
          * @brief Apply a 2D rotation matrix with the given radians
          * 
          * Standard 2D rotation matrix

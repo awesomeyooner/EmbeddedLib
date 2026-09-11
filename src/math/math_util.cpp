@@ -18,6 +18,13 @@ double math::clamp(double input, double lower_bound, double upper_bound)
 } // end of "clamp"
 
 
+double math::R_divider(double Vout, double R1, double R2)
+{
+    return Vout * (R1 + R2) / R2;
+
+} // end of "R_divider(double, double, double)"
+
+
 double math::radians_to_degrees(double radians)
 {
     return radians * (180 / M_PI);

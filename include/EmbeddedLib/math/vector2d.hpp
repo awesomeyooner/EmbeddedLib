@@ -54,6 +54,23 @@ class Vector2d : public Vector<2>
          */
         Vector2d rotate(double radians);
 
+        /**
+         * @brief Apply the inverse (transpose) 2D rotation matrix with the given radians
+         * 
+         * Standard 2D rotation matrix
+         * 
+         * `V' = Rot Matrix^T * V`
+         * 
+         * ```
+         * [ cos  sin ]
+         * [ -sin  cos  ]
+         * ```
+         * 
+         * @param radians `double`
+         * @return `Vector2d` 
+         */
+        Vector2d inverse_rotate(double radians);
+
     private:
 
 

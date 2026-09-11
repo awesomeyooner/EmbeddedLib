@@ -34,3 +34,23 @@ Vector2d Vector2d::rotate(double radians)
     return {x_p, y_p};
 
 } // end of "rotate(double)"
+
+
+Vector2d Vector2d::inverse_rotate(double radians)
+{
+    double x = get(0);
+    double y = get(1);
+
+    double cos = std::cos(radians);
+    double sin = std::sin(radians);
+
+    // Standard 2D rotation matrix
+    // V' = Rot Matrix^T * V
+    // [ cos  sin ]
+    // [ -sin  cos  ]
+    double x_p = x * cos + y * sin;
+    double y_p = x * sin - y * cos;
+
+    return {x_p, y_p};
+
+} // end of "rotate(double)"

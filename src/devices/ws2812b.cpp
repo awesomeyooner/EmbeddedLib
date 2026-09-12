@@ -161,6 +161,39 @@ StatusCode WS2812B::set_color(ColorData color_data, bool should_update)
 } // end of "set_color(int, int, uint8_t, uint8_t, uint8_t, bool = true)"
 
 
+StatusCode WS2812B::set_HSV(double H, double S, double V, bool should_update)
+{
+    auto rgb = color_space::HSV_to_RGB(H, S, V).times(255);
+
+    uint8_t r = rgb.at(0);
+    uint8_t g = rgb.at(1);
+    uint8_t b = rgb.at(2);
+
+    return set_color(r, g, b, should_update);
+
+} // end of "set_HSV(double, double = 1, double = 1, bool = true)"
+
+
+StatusCode WS2812B::set_color_gradient(double index_scalar, double H, double S, double V, bool should_update)
+{
+    for(int i = 0; i < m_num_leds; i++)
+    {
+        double H_i = fmod(H + (i * index_scalar), 1);
+
+        auto rgb = color_space::HSV_to_RGB(H_i, S, V).times(255);
+
+        uint8_t r = rgb.at(0);
+        uint8_t g = rgb.at(1);
+        uint8_t b = rgb.at(2);
+
+        set_color(i, r, g, b, false);
+    }
+
+    return should_update ? update() : StatusCode::OK;
+
+} // end of "set_color_gradient(double, double, double = 1, double = 1, bool = true)"
+
+
 void WS2812B::dma_callback()
 {
     HAL_TIM_PWM_Stop_DMA(m_timer.get_timer(), m_timer.get_channel());

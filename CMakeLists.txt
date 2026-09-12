@@ -21,6 +21,9 @@ set( SRC_FILES
     # /math/control
     src/math/control/pid_controller.cpp
 
+    # /math/color
+    src/math/color/color_space.cpp
+
 )
 
 # `gpio.h` Dependents

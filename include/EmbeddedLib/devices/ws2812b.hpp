@@ -4,6 +4,7 @@
 
 #include "EmbeddedLib/status.hpp"
 #include "EmbeddedLib/devices/timer_device.hpp"
+#include "EmbeddedLib/math/color/color_space.hpp"
 
 #include "stm32f4xx_hal.h"
 #include "tim.h"
@@ -186,6 +187,10 @@ class WS2812B
          * @return `status_utils::StatusCode` OK if DMA transmit was successful, FAILED otherwise
          */
         status_utils::StatusCode set_color(ColorData color_data, bool should_update = true);
+
+        status_utils::StatusCode set_HSV(double H, double S = 1, double V = 1, bool should_update = true);
+
+        status_utils::StatusCode set_color_gradient(double index_scalar, double H, double S = 1, double V = 1, bool should_update = true);
 
         /**
          * @brief Stops the DMA and raises the ready flag to true upon DMA finish

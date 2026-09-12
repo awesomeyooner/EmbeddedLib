@@ -26,12 +26,12 @@ StatusCode ADCDevice::start_DMA()
 
 double ADCDevice::poll(int timeout_ms)
 {
-    HAL_ADC_Start(&hadc1);
+    HAL_ADC_Start(m_adc);
 
     if(HAL_ADC_PollForConversion(m_adc, timeout_ms) == HAL_OK)
         m_read_buffer.at(0) = HAL_ADC_GetValue(m_adc);
 
-    HAL_ADC_Stop(&hadc1);
+    HAL_ADC_Stop(m_adc);
 
     return m_read_buffer.at(0);
 

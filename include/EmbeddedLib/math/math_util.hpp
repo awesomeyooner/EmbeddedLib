@@ -24,6 +24,8 @@ namespace math
      */
     double R_divider(double Vout, double R1, double R2);
 
+    int sign(double input);
+
     double radians_to_degrees(double radians);
 
     double degrees_to_radians(double degrees);

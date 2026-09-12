@@ -18,6 +18,20 @@ double math::clamp(double input, double lower_bound, double upper_bound)
 } // end of "clamp"
 
 
+int math::sign(double input)
+{
+    // If greater than 0 (positive)
+    if(input > 0)
+        return 1;
+    // If less than 0 (negatie)
+    else if(input < 0)
+        return -1;
+    else
+        return 0;
+
+} // end of "sign(double)"
+
+
 double math::R_divider(double Vout, double R1, double R2)
 {
     return Vout * (R1 + R2) / R2;

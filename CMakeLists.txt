@@ -80,6 +80,19 @@ set( SRC_FILES
         )
     endif()
 
+# `spi.h` Dependents
+    option(EMBEDDEDLIB_BUILD_SPI
+        "Compile code that uses `spi.h`"
+        ON
+    )
+
+    if(EMBEDDEDLIB_BUILD_SPI)
+        list(APPEND SRC_FILES
+            # /devices/eeprom
+            src/devices/eeprom/eeprom_spi.cpp
+        )
+    endif()
+
 # === Main Library ===
 add_library(${PROJECT_NAME}
     ${SRC_FILES}

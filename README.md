@@ -62,3 +62,4 @@ By default, including `EmbeddedLib` will compile all `.cpp` files, but some of t
 | `tim.h` | TIM Channels | `set(EMBEDDEDLIB_BUILD_TIMER OFF CACHE BOOL "Disable TIM compiling" FORCE)`
 | `adc.h` | ADC Channels | `set(EMBEDDEDLIB_BUILD_ADC OFF CACHE BOOL "Disable ADC compiling" FORCE)`
 | `i2c.h` | I2C Lines | `set(EMBEDDEDLIB_BUILD_I2C OFF CACHE BOOL "Disable I2C compiling" FORCE)`
+| `spi.h` | SPI Lines | `set(EMBEDDEDLIB_BUILD_SPI OFF CACHE BOOL "Disable SPI compiling" FORCE)`

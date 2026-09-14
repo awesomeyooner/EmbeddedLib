@@ -13,6 +13,34 @@
 
 
 // Datasheet https://www.st.com/resource/en/datasheet/m95320-w.pdf
+
+/**
+ * @brief Controls standard SPI EEPROMs like ST M95320-W
+ * 
+ * Please have your SPI configured as such in CubeMX
+ * 
+ * - `Mode = Full-Duplex Master`
+ * 
+ * - `Hardware NSS Signal = Disabled`
+ * 
+ * - `Frame Format = Motorola`
+ * 
+ * - `Data Size = 8 Bits`
+ * 
+ * - `First Bit = MSB First`
+ * 
+ * - Max `Baud Rate` is `20 MHz` 
+ * 
+ * - `Clock Polarity (CPOL) = Low`
+ * 
+ * - `Clock Phase (CPHA) = 1 Edge`
+ * 
+ * - `CRC Calculation = Disabled`
+ * 
+ * - `NSS Signal Type = Software (GPIO)`
+ * 
+ * 
+ */
 class EEPROMSPI
 {
 

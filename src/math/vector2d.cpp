@@ -57,7 +57,7 @@ Vector2d Vector2d::inverse_rotate(double radians)
     // [ cos  sin ]
     // [ -sin  cos  ]
     double x_p = x * cos + y * sin;
-    double y_p = x * sin - y * cos;
+    double y_p = -x * sin + y * cos;
 
     return {x_p, y_p};
 

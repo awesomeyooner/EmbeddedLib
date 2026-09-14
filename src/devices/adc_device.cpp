@@ -54,7 +54,7 @@ double ADCDevice::get_percent(int index)
 
 double ADCDevice::get_voltage(int index)
 {
-    return get_percent() * ADC_VREF;
+    return get_percent(index) * ADC_VREF;
 
 } // end of "get_voltage(int)"
 
